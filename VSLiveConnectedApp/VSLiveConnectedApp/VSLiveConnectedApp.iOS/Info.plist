@@ -55,10 +55,10 @@
 <key>NSLocationWhenInUseUsageDescription</key>
     <string>We are using your location</string>
 
-	<key>NSAppTransportSecurity</key>
+	<!-- key>NSAppTransportSecurity</key>
 <dict>
 <key>NSAllowsArbitraryLoads</key><true/>
-</dict>
+</dict -->
 
 </dict>
 </plist>

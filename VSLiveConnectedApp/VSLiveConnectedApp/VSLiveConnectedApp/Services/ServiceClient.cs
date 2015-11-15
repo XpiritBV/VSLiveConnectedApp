@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
+using ModernHttpClient;
 using Refit;
 using VSLiveConnectedApp.Data;
 using VSLiveConnectedApp.Services.Refit;
@@ -18,7 +20,11 @@ namespace VSLiveConnectedApp.Services
 
         public ServiceClient()
         {
-            _client = RestService.For<IConferenceApi>(ApiBaseAddress);
+            var client = new HttpClient(new NativeMessageHandler())
+            {
+                BaseAddress = new Uri(ApiBaseAddress)
+            };
+            _client = RestService.For<IConferenceApi>(client);
         }
 
         public async Task<List<City>> GetCities()
