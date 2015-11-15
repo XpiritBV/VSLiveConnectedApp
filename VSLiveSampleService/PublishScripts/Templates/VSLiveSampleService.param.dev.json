@@ -1,0 +1,29 @@
+{
+  "siteName": {
+    "value": "vslivesampleservice"
+  },
+  "hostingPlanName": {
+    "value": "Default1"
+  },
+  "siteLocation": {
+    "value": "West Europe"
+  },
+  "sku": {
+    "value": "Basic"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "siteMode": {
+    "value": "Limited"
+  },
+  "computeMode": {
+    "value": "0"
+  },
+  "subscriptionId": {
+    "value": "3548110f-f990-499e-b74c-5f2eec207f2d"
+  },
+  "resourceGroup": {
+    "value": "Default-Web-WestEurope"
+  }
+}
