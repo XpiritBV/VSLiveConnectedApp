@@ -1,5 +1,5 @@
 # VSLiveConnectedApp
-Demo application for the Resilient Networking module
+Demo application for the Resilient Networking module. Have a look at the commit history in this repo to see how we built up this app step by step.
 
 The demo app uses a sample WebApi service. The source for the service is included in this repo, but you can also use:
 

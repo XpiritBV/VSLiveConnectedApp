@@ -26,6 +26,7 @@ namespace VSLiveConnectedApp.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::ModernHttpClient.Resource.String.library_name = global::VSLiveConnectedApp.Droid.Resource.String.library_name;
 			global::Splat.Resource.String.library_name = global::VSLiveConnectedApp.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_fade_in = global::VSLiveConnectedApp.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_fade_out = global::VSLiveConnectedApp.Droid.Resource.Animation.abc_fade_out;

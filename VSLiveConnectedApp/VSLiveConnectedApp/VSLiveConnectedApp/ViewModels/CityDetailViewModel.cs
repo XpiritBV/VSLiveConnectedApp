@@ -52,5 +52,10 @@ namespace VSLiveConnectedApp.ViewModels
 					}, (o) => true));
 			}
 		}
+
+        public async Task PrefetchSchedule()
+        {
+            await _schedule.GetSchedule(false);
+        }
     }
 }

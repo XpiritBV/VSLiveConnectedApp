@@ -173,6 +173,10 @@
       <HintPath>..\..\packages\akavache.sqlite3.4.1.2\lib\Portable-Net45+Win8+WP8+Wpa81\Akavache.Sqlite3.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fusillade, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\fusillade.0.6.0\lib\Portable-net45+win+wpa81+wp80\Fusillade.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
       <Private>True</Private>
@@ -183,6 +187,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Punchclock, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Punchclock.1.1.1\lib\Portable-net45+win+wpa81+wp80\Punchclock.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Refit, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">

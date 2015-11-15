@@ -29,5 +29,12 @@ namespace VSLiveConnectedApp.Views
         {
             ViewModel = new CityDetailViewModel(this, city);
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await ViewModel.PrefetchSchedule();
+        }
     }
 }
