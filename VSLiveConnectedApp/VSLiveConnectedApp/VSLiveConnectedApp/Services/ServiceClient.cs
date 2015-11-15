@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
+using Connectivity.Plugin;
 using Fusillade;
 using ModernHttpClient;
 using Refit;
@@ -74,15 +75,23 @@ namespace VSLiveConnectedApp.Services
 
         private async Task<List<City>> GetRemoteCitiesAsync()
         {
-            return await UserInitiated.GetCities();
+            if (CrossConnectivity.Current.IsConnected)
+            {
+                return await UserInitiated.GetCities();
+            }
+            return null;
         }
 
         public async Task<Schedule> GetScheduleForCity(string id, bool isUserInitiated)
         {
             try
             {
-                var client = isUserInitiated ? UserInitiated : Speculative;
-                return await client.GetScheduleForCity(id);
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    var client = isUserInitiated ? UserInitiated : Speculative;
+                    return await client.GetScheduleForCity(id);
+                }
+                return null;
             }
             catch (ApiException ex)
             {
