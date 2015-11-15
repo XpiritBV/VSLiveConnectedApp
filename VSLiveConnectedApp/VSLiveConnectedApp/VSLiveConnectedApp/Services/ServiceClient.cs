@@ -8,6 +8,7 @@ using Akavache;
 using Connectivity.Plugin;
 using Fusillade;
 using ModernHttpClient;
+using Polly;
 using Refit;
 using VSLiveConnectedApp.Data;
 using VSLiveConnectedApp.Services.Refit;
@@ -77,7 +78,14 @@ namespace VSLiveConnectedApp.Services
         {
             if (CrossConnectivity.Current.IsConnected)
             {
-                return await UserInitiated.GetCities();
+                return await Policy
+                    .Handle<WebException>()
+                    .WaitAndRetryAsync
+                    (
+                        retryCount: 5,
+                        sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                    )
+                    .ExecuteAsync(async () => await UserInitiated.GetCities());
             }
             return null;
         }
@@ -88,8 +96,18 @@ namespace VSLiveConnectedApp.Services
             {
                 if (CrossConnectivity.Current.IsConnected)
                 {
-                    var client = isUserInitiated ? UserInitiated : Speculative;
-                    return await client.GetScheduleForCity(id);
+                    Task<Schedule> fetchTask = isUserInitiated ? 
+                        UserInitiated.GetScheduleForCity(id) : 
+                        Speculative.GetScheduleForCity(id);
+
+                    return await Policy
+                        .Handle<WebException>()
+                        .WaitAndRetryAsync
+                        (
+                            retryCount: 5,
+                            sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                        )
+                        .ExecuteAsync(async () => await fetchTask);
                 }
                 return null;
             }
