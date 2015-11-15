@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
+using Refit;
 using VSLiveConnectedApp.Data;
+using VSLiveConnectedApp.Services.Refit;
 
 namespace VSLiveConnectedApp.Services
 {
@@ -13,61 +11,33 @@ namespace VSLiveConnectedApp.Services
     {
         public static string ApiBaseAddress = "http://vslivesampleservice.azurewebsites.net";
 
+        private IConferenceApi _client;
+
+        public ServiceClient()
+        {
+            _client = RestService.For<IConferenceApi>(ApiBaseAddress);
+        }
+
         public async Task<List<City>> GetCities()
         {
-            IEnumerable<City> cities = new List<City>();
-
-            using (var httpClient = CreateClient())
-            {
-                var response = await httpClient.GetAsync("api/cities").ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    if (!string.IsNullOrWhiteSpace(json))
-                    {
-                        cities = await Task.Run(() =>
-                            JsonConvert.DeserializeObject<IEnumerable<City>>(json)
-                            ).ConfigureAwait(false);
-
-                    }
-                }
-            }
-
-            return cities.ToList();
+            return await _client.GetCities();
         }
 
         public async Task<Schedule> GetScheduleForCity(string id)
         {
-            using (var httpClient = CreateClient())
+            try
             {
-                var response = await httpClient.GetAsync($"api/schedule/{id}").ConfigureAwait(false);
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    if (!string.IsNullOrWhiteSpace(json))
-                    {
-                        var schedule = await Task.Run(() =>
-                            JsonConvert.DeserializeObject<Schedule>(json)
-                            ).ConfigureAwait(false);
-
-                        return schedule;
-                    }
-                }
+                return await _client.GetScheduleForCity(id);
             }
-            return null;
-        }
-
-        private HttpClient CreateClient()
-        {
-            var httpClient = new HttpClient
+            catch (ApiException ex)
             {
-                BaseAddress = new Uri(ApiBaseAddress)
-            };
-
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            return httpClient;
+                if (ex.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
+                throw;
+            }
         }
     }
 }
+
